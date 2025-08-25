@@ -31,7 +31,7 @@ This project integrates **FPGA-based DSP, AXI interconnects, Linux on ARM, and a
 
 ## 🖥️ Block Diagram
 
-![SDR Block Design](docs/images/sdr_block_design.png)  
+![SDR Block Design](sdr_block_design.png)  
 *(Vivado block diagram of the Zynq-7000 PS + PL integration)*  
 
 ---
@@ -69,5 +69,5 @@ This project integrates **FPGA-based DSP, AXI interconnects, Linux on ARM, and a
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOURUSERNAME/software-defined-radio.git
+   git clone https://github.com/qiandawg/software-defined-radio.git
    cd software-defined-radio
