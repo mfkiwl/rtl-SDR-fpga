@@ -1,0 +1,31 @@
+# Ignore Vivado build junk
+*.jou
+*.log
+*.backup
+*.bit
+*.dcp
+*.tmp
+*.wdb
+
+# Ignore Vivado auto-generated folders
+.runs/
+.cache/
+.Xil/
+ip_user_files/
+.hw/
+.sim/
+
+# Ignore IP core auto-generated files (keep only .xci)
+ip_repo/**/demo_tb/
+ip_repo/**/doc/
+ip_repo/**/hdl/
+ip_repo/**/sim/
+ip_repo/**/synth/
+ip_repo/**/tmp/
+ip_repo/**/cmpy_0*.v
+ip_repo/**/cmpy_0*.vhdl
+ip_repo/**/cmpy_0*.xdc
+ip_repo/**/cmpy_0*.dcp
+ip_repo/**/cmpy_0*.xml
+ip_repo/**/cmpy_0*.veo
+ip_repo/**/cmpy_0*.vho
