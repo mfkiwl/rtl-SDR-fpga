@@ -71,20 +71,39 @@ This project integrates **FPGA-based DSP, AXI interconnects, Linux on ARM, and a
    ```bash
    git clone https://github.com/qiandawg/software-defined-radio.git
    cd software-defined-radio
+   
+2. run make_project.bat (windows) or make_project.sh (linux) to build the project all the way through SD card creation.
 
-2. #Software defined radio build steps
+3. **Copy the Web Package**  
+   Copy "sdr_files\src\web.tgz" to your Zybo board.  
+   *The location is flexible — you may place it on the SD card or in the temporary RAM filesystem.*
 
+4. **Extract the Archive**  
+   Run the following command to extract the files:  
+   ```bash
+   tar -xvf web.tgz
+   ```  
+   This creates a new directory named `web` in your current path.
 
-3. if you are building in windows and vivado is not installed in c:\Xilinx\Vivado\2024.2, you will have to change one thing
-   I included the settings64.bat file in the make_project.bat just to save a step.  Change that to your Install directory
+5. **Start the Webserver**  
+   Change into the `web` directory and start the built-in webserver:  
+   ```bash
+   cd web
+   sudo httpd -p 8080 .
+   ```  
+   Your Zybo will now serve webpages. Access them from a browser at:  
+   ```
+   http://<your_zybo_ip>:8080
+   ```
 
-4. run make_project.bat (windows) or make_project.sh (linux) to build the project all the way through SD card creation.  You can of course
-edit in the GUI and debug in Vitis GUI afterwards as well.  The Vivado project is in "vivado" and the vitis workspace will be in "vitis"
+6. **Initialize the Radio**  
+   Inside the `web` directory is the default bitfile (bit.bin file) from my completed project. 
+   - Clicking **Initialize PL/Radio** runs `fpgautil` to configure the PL with this design.  
+   - It also runs the `configure_codec` script.  
+   - After you complete your hardware, you can replace this bitfile (`bit.bin`) with your own.
 
-
-A couple of other notes to smooth things along :
-
-- Note that the Makefile that is created for you with the Create/Import peripheral wizard doesn't work when you go to build your software Vitis if you are using Windows.  Before packaging your peripheral, make sure to copy the Makefile from the doug_custom peripheral in this repository in place of the Makefile that the tool created as part of your software driver
-- I'm not convinced that right clicking on the "Update Hardware Platform" works when you've changed the underlying hardware XSA file.  The safest thing to do here (this is where the script really helps) is to just delete the entire Vitis directory and regenerate it.  To regenerate a Vitis directory (workspace with all the software), you can certainly do it manually as in all the other labs; however I just run the last line of "make_project.bat" from the command prompt
-- Make sure to use a standard command prompt, and not the windows powershell.
-- If you are experiencing long build times (i.e. waiting for an excessive amount of time for impl_1 to complete) this may be that you don't have enough memory to handle the level of parallelism that I asked for in the script.  Edit "impl.tcl" to change the line from "-jobs 7" to "-jobs 3" if you don't have 16GB of memory.  Your computer probably doesn't have enough memory to synthesize 7 things in parallel, and is constantly swapping to disk
+7. **Configure Frequencies**  
+   When the user enters frequencies and clicks **Submit**, a Python script in the `cgi-bin` directory is executed.  
+   - The script receives the frequency values entered in the form.
+   
+8. **You should hear your tuned radio output from the AUX out!**
